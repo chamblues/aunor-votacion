@@ -1,0 +1,105 @@
+body {
+  margin: 0;
+}
+
+.App {
+  min-height: 100vh;
+  background: url(./assets/img/bg-top.png) no-repeat top left -20px,
+    url(./assets/img/bg-bottom.png) no-repeat bottom -200px right -100px;
+}
+.App.Videos {
+  background: url(./assets/img/bg-top.png) no-repeat top left -60px;
+}
+.App.Thanks {
+  background: url(./assets/img/bg-top.png) no-repeat top left -60px,
+    url(./assets/img/bg-thanks.png) no-repeat bottom left;
+  background-size: auto, contain;
+}
+.App.Welcome .section_content .flex {
+  /* height: calc(100vh - 110px) */
+  height: 600px;
+}
+.page_video .section_content .flex {
+  height: auto;
+}
+.loading {
+  animation: rotate360 infinite 0.5s linear;
+}
+.color-green {
+  color: #72bf43;
+}
+.color-orange {
+  color: #f39c00;
+}
+.color-gray {
+  color: #606060
+}
+.btn_vota {
+  background: #1ca1db;
+  color: #fff;
+}
+
+
+.heartbeat {
+	animation: heartbeat 1.5s ease-in-out infinite both;
+}
+
+
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes heartbeat {
+  from {
+    transform: scale(1);
+    transform-origin: center center;
+    animation-timing-function: ease-out;
+  }
+  10% {
+    transform: scale(0.91);
+    animation-timing-function: ease-in;
+  }
+  17% {
+    transform: scale(0.98);
+    animation-timing-function: ease-out;
+  }
+  33% {
+    transform: scale(0.87);
+    animation-timing-function: ease-in;
+  }
+  45% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+}
+@media screen and (max-width: 1600px) {
+  .App {
+    background: url(./assets/img/bg-top.png) no-repeat top left -60px,
+      url(./assets/img/bg-bottom.png) no-repeat bottom -200px right -300px;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .App {
+    background: url(./assets/img/bg-top.png) no-repeat top left -60px,
+      url(./assets/img/bg-bottom.png) no-repeat bottom -200px right -400px;
+  }
+}
+@media screen and (max-width: 639px) {
+  .App {
+    min-height: auto;
+    background: url(./assets/img/bg-top.png) no-repeat top -80px left -60px;
+  }
+  .App.Videos {
+    background: url(./assets/img/bg-top.png) no-repeat top -80px left -60px;
+  }
+  .App.Thanks {
+    background: url(./assets/img/bg-top.png) no-repeat top -80px left -60px,
+      url(./assets/img/bg-thanks.png) no-repeat bottom left;
+    background-size: auto, contain;
+  }
+}
