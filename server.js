@@ -21,10 +21,18 @@ server.listen(API_PORT, () => {
     
 })
 
-server.get('/api/users/', (req, res) => {
+server.get('/api/users', (req, res) => {
     const dni = req.query.dni;
 
     SQLQuery.getUsers(dni).then(response => {
+        res.send(response)
+    })
+})
+
+server.get('/api/videos', (req, res) => {
+    const category = req.query.category;
+
+    SQLQuery.getVideos(category).then(response => {
         res.send(response)
     })
 })

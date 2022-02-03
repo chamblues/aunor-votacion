@@ -1,3 +1,4 @@
+// This is an example
 class Sellout {
     constructor (CodigoCliente, CodigoProducto, Cantidad, FechaRegistro, Metadata, FechaSellout) {
         this.CodigoCliente = CodigoCliente;
