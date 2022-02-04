@@ -1,16 +1,25 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import AuthContext from '../store/auth-context'
+import { Link, useNavigate } from 'react-router-dom'
 import titleImage from '../assets/img/avanzando-juntos.png';
-import ButtonBack from '../components/ButtonBack'
+
 
 import { BiPlay } from "react-icons/bi";
 
 const Category = (props) => {
 
+    const authCtx = useContext(AuthContext)
+    const navigate = useNavigate();
+
     const categoryHandler = (event) => {
         event.preventDefault();
         const categoryElement = event.currentTarget.dataset.category
         props.onSelectedCategory(categoryElement)
+    }
+
+    const logoutHandler = () => {
+        authCtx.logout()
+        navigate('/participa', { replace: true })
     }
 
 
@@ -30,7 +39,7 @@ const Category = (props) => {
                 </div>
 
                 <div className="text-right">
-                    <ButtonBack to="/participa"/>
+                    <button onClick={logoutHandler} className="btn_back font-bold mt-20 text-white border-2 py-2 px-5 rounded-md inline-block hover:bg-black hover:text-white">Salir</button>
                 </div>
             </div>
 

@@ -6,7 +6,7 @@ const AuthContext = React.createContext({
     token: '',
     dni: '',
     isLoggedIn: false,
-    login: (token) => { },
+    login: ({token, dni}) => { },
     logout: () => { }
 });
 
@@ -21,19 +21,22 @@ const calculateReaminingTime = expirationTime => {
 
 const retrieveStoredToken = () => {
     const storedToken = localStorage.getItem('token')
+    const storedDni = localStorage.getItem('dni')
     const storedExpirationDate = localStorage.getItem('expirationTime')
 
     const remainingTime = calculateReaminingTime(storedExpirationDate)
 
     if (remainingTime <= 60000) {
         localStorage.removeItem('token')
+        localStorage.removeItem('dni')
         localStorage.removeItem('expirationTime')
         return null;
     }
 
     return {
         token: storedToken,
-        duration: remainingTime
+        duration: remainingTime,
+        dni: storedDni
 
     }
 
@@ -47,18 +50,22 @@ export const AuthContextProvider = (props) => {
     const tokenData = retrieveStoredToken();
 
     let initialToken;
+    let dniStored;
     if (tokenData) {
         initialToken = tokenData.token;
+        dniStored = tokenData.dni;
     }
 
     const [token, setToken] = useState(initialToken);
-    const [dni, setDni] = useState();
+    const [dni, setDni] = useState(dniStored);
 
     const userIsLoggedin = !!token;
 
     const logoutHandler = useCallback(() => {
         setToken(null)
+        setDni(null)
         localStorage.removeItem('token')
+        localStorage.removeItem('dni')
         localStorage.removeItem('expirationTime')
 
         if (logoutTimer) {
@@ -67,10 +74,12 @@ export const AuthContextProvider = (props) => {
     }, [])
 
     const loginHandler = ({token, dni}, expirationTime) => {
+        console.log('token dni expirationTime', token, dni, expirationTime);
         setToken(token)
         setDni(dni)
 
         localStorage.setItem('token', token)
+        localStorage.setItem('dni', dni)
         localStorage.setItem('expirationTime', expirationTime)
         
 

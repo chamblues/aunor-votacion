@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import Reconoce from '../assets/img/titulo-aunor.png'
-import Vote from '../assets/img/vote.png'
-// import Video1 from '../assets/video/video-1.mp4'
+import React, { useState, useEffect, useContext } from 'react'
+import AuthContext from '../store/auth-context'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import classes from './Video.module.css'
 import axiosInstance from '../helpers/axios-instance.js'
 import Slider from "react-slick";
@@ -15,6 +13,8 @@ const publicUrl = process.env.PUBLIC_URL;
 
 const Videos = (props) => {
     const [videoList, setVideoList] = useState([])
+    const authCtx = useContext(AuthContext)
+    const navigate = useNavigate();
 
     let settings = {
         dots: true,
@@ -53,32 +53,28 @@ const Videos = (props) => {
             })
         }
         getVideos();
-    }, [])
+    }, [categoryId])
 
 
 
     const sendVote = async (video_id, dni, category) => {
 
-        const isVoted = await axiosInstance.get('/isVoted.php', {
+        const isVoted = await axiosInstance.get('/vote', {
             params: {
-                video_id: video_id,
+                videoId: video_id,
                 dni: dni,
                 category: category,
             }
         })
 
         if (typeof isVoted.data === 'undefined' || isVoted.data.length === 0) {
-            await axiosInstance.get('/vote.php', {
-                params: {
-                    video_id: video_id,
-                    dni: dni,
-                    category: category,
-                    register: 'register'
-                }
+            await axiosInstance.post('/vote', {
+                videoId: video_id,
+                dni: dni,
+                category: category, 
             }).then((response) => {
-                console.log('rpta: ', response.data.rpta)
-                if (response.data.rpta == 'ok') {
-                    props.onVideoVote(video_id)
+                if (response.data.status == 'successful') {
+                    navigate('/gracias', {replace: true})
                 }
 
 
@@ -98,7 +94,8 @@ const Videos = (props) => {
     const voteHandler = (event) => {
         const videoVoted = event.target.dataset.video_id
         const videoCat = event.target.dataset.category
-        const getDni = sessionStorage.getItem('dni')
+        const getDni = authCtx.dni
+
 
         sendVote(videoVoted, getDni, videoCat)
 

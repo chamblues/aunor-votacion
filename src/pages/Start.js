@@ -53,10 +53,10 @@ const Start = (props) => {
 
             <div className="flex flex-col lg:flex-row justify-center lg:justify-between items-start w-10/12 mx-auto mt-10 text-center">
                 <div className="cols mx-auto">
-                <Link to="/participa" className="btn_black bg-gradient-to-r from-bg-neutral-900 via-purple-500 to-pink-500 inline-block font-bold text-lg lg:text-2xl mt-5 py-3 px-5 lg:py-5 lg:px-8 rounded-md guardianBold">Vota aquí</Link>
+                <Link to="/participa" className="heartbeat btn_black bg-gradient-to-r from-bg-neutral-900 via-purple-500 to-pink-500 inline-block font-bold text-lg lg:text-2xl mt-5 py-3 px-5 lg:py-5 lg:px-8 rounded-md guardianBold">Vota aquí</Link>
                 </div>
                 <div className="cols mx-auto">
-                <Link to="/bienvenida" className="btn_black inline-block font-bold text-lg lg:text-2xl mt-5 py-3 px-5 lg:py-5 lg:px-8 rounded-md guardianBold">Mira el evento <br /> aquí</Link>
+                <Link to="/bienvenida" className="heartbeat btn_black inline-block font-bold text-lg lg:text-2xl mt-5 py-3 px-5 lg:py-5 lg:px-8 rounded-md guardianBold">Mira el evento <br /> aquí</Link>
                 <Countdown finalTime={dateOver} />
                 </div>
             </div>

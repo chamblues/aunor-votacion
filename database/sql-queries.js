@@ -32,13 +32,36 @@ const getVideos = async (category) => {
     }
 }
 
-const sendVote = async (category) => {
+const getVote = async (dni, category) => {
     try {
-        const query = `SELECT * FROM videos WHERE category = '${category}'`;
+        const query = `SELECT * FROM votes WHERE category = ? AND dni = ?`;
         // now get a Promise wrapped instance of that pool
         const promisePool = pool.promise();
-        const [result, fields] = await promisePool.execute(query)
-        // console.log(result)
+        const [result, fields] = await promisePool.execute(query, [category, dni])
+        
+        return result;
+
+
+    } catch (error) {
+        console.log('error query:', error)
+    }
+}
+
+const sendVote = async (videoId, dni, category) => {
+    try {
+        const dateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+        const query = `INSERT INTO votes SET ?`;
+        // now get a Promise wrapped instance of that pool
+        const promisePool = pool.promise();
+        const result = await promisePool.query(query, {
+            video_id: videoId,
+            dni,
+            category,
+            createdAt: dateTime
+        })
+        // console.log('result', result)
+
         return result;
 
 
@@ -51,6 +74,7 @@ const sendVote = async (category) => {
 
 module.exports = {
     getUsers,
-    getVideos
-
+    getVideos,
+    getVote,
+    sendVote
 }

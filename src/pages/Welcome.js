@@ -1,6 +1,6 @@
 import React, { useState, useContext} from 'react'
 import AuthContext from '../store/auth-context'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Reconoce from '../assets/img/titulo-aunor.png'
 import { VscLoading } from "react-icons/vsc";
 import axiosInstance from '../helpers/axios-instance.js'
@@ -10,10 +10,10 @@ const publicUrl = process.env.PUBLIC_URL
 
 const Welcome = (props) => {
     const [valid, setValid] = useState(false)
-    const [user, setUser] = useState()
+    // const [user, setUser] = useState()
     const authCtx = useContext(AuthContext)
 
-    console.log(authCtx);
+    
 
     const navigate = useNavigate();
 
@@ -25,8 +25,18 @@ const Welcome = (props) => {
         }).then(response => {
 
             if (typeof response.data != 'undefined' && response.data.length > 0) {
-                sessionStorage.setItem('dni', response.data[0].dni);
-                setUser(response.data[0].dni)
+                // sessionStorage.setItem('dni', response.data[0].dni);
+                // setUser(response.data[0].dni)
+                setValid(true)
+                const expirationTime = new Date(new Date().getTime() + 24 * (60*60*1000))  // 24 hours
+
+                authCtx.login({
+                    token: response.data[0].token,
+                    dni: response.data[0].dni
+                }, expirationTime.toISOString()
+                )
+
+                console.log(authCtx);
 
                 console.log('user identified')
                 navigate('/categorias', { replace: true })

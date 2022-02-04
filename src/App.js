@@ -25,10 +25,7 @@ function App() {
     setCurrentPage('Videos')
   }
 
-  const videoVotedHandler = (vote) => {
-    console.log('video voted:', vote)
-    setCurrentPage('Thanks')
-  }
+
 
   const backPageHandler = (page) => {
 
@@ -45,23 +42,12 @@ function App() {
           <Route index element={<Start onPage={pageHandler} />} />
           <Route path="/participa" element={<Welcome onPage={pageHandler} />} />
           <Route path="/categorias" element={<Category onSelectedCategory={selectedCategoryHandler} onPage={pageHandler} />} />
-          <Route path="/categorias/:categoryId" element={<Videos onVideoVote={videoVotedHandler} onPage={pageHandler} selectedCategory={category} />} />
+          <Route path="/categorias/:categoryId" element={<Videos onPage={pageHandler} selectedCategory={category} />} />
+          <Route path="/gracias" element={<Thanks/>} />
           <Route path="*" element={<NotFound/>}/>
             
         </Routes>
 
-
-
-        {/* <div className="container mx-auto px-4">
-          <div className="flex flex-col justify-center items-center">
-            {currentPage === 'Start' && <Start onPage={pageHandler} />}
-            {currentPage === 'Welcome' && <Welcome onPage={pageHandler} />}
-            {currentPage === 'Category' && <Category onSelectedCategory={selectedCategoryHandler} onPage={pageHandler} />}
-            {currentPage === 'Videos' && <Videos onVideoVote={videoVotedHandler} onPage={pageHandler} selectedCategory={category}/>}
-            {currentPage === 'Thanks' && <Thanks onPage={pageHandler}/>}
-            
-          </div>
-        </div> */}
       </main>
 
     </div>
