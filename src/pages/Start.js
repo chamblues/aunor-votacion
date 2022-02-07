@@ -26,7 +26,7 @@ const Start = (props) => {
 
     const [modalIsOpen, setIsOpen] = useState(false);
 
-    const dateOver= "February 04, 2022 18:00:00"
+    const dateOver= "February 10, 2022 18:00:00"
 
 
     function openModal() {
