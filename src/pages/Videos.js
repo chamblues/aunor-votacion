@@ -41,7 +41,7 @@ const Videos = (props) => {
 
     useEffect(() => {
         const getVideos = async () => {
-            await axiosInstance.get('/videos', {
+            await axiosInstance.get('/videos/category', {
                 params: {
                     category: categoryId
                 }
@@ -59,7 +59,7 @@ const Videos = (props) => {
 
     const sendVote = async (video_id, dni, category) => {
 
-        const isVoted = await axiosInstance.get('/vote', {
+        const isVoted = await axiosInstance.get('/votes/category', {
             params: {
                 videoId: video_id,
                 dni: dni,
